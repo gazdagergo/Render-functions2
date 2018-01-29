@@ -1,18 +1,41 @@
 import React from 'react';
 import { render } from 'react-dom';
-import ConfirmationModal from './confirmationWrapper';
-import articleHelper from './articleHelper';
+
+class ConfirmDeleteComponent extends React.Component {
+  state = { confirm: false };
+
+  setConfirm = () => this.setState({ confirm: true });
+
+  click = () => {
+    this.state.confirm ? this.props.onClick() : this.setConfirm();
+  }
+
+  render() {
+    const { children } = this.props;
+    const { confirm } = this.state;
+
+    return children({
+      onClick: this.click,
+      setConfirm: this.setConfirm,
+      confirm
+    });
+  }
+}
+
 
 class App extends React.Component {
   render() {
     return(
       <div>
-        <ConfirmationModal
-          text="Delete this article?"
-          onConfirm={ () => articleHelper.deleteArticle() }
-        >
-          <button>Delete</button>
-        </ConfirmationModal>
+        <ConfirmDeleteComponent onClick={() => console.log("deleted")}>
+          {({confirm, onClick}) => (
+            <button
+              onClick={onClick}
+            >
+              {confirm ? 'Are you sure?' : 'Delete'}
+            </button>
+          )}
+        </ConfirmDeleteComponent>
       </div>
     )
   }

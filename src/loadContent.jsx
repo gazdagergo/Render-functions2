@@ -26,3 +26,5 @@ class LoadContent extends React.Component {
   }
 }
 export default LoadContent;
+
+// https://codedaily.io/tutorials/6/Using-Functions-as-Children-and-Render-Props-in-React-Components

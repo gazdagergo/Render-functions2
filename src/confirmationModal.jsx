@@ -10,15 +10,17 @@ class ConfirmationModal extends React.Component {
     if (this.state.modalVisible) {
       return (
       <div>
-        <div style={{
-          background: 'gray',
-          display: 'inline-block',
-          position: 'absolute',
-          padding: 12,
-          borderRadius: 5,
-          left: 54,
-          top: 16
-        }}>
+        <div
+          style={{
+            background: 'gray',
+            display: 'inline-block',
+            position: 'absolute',
+            padding: 12,
+            borderRadius: 5,
+            left: 54,
+            top: 16
+          }}
+        >
           {this.props.text}<br />
           <button
             onClick={() => {
