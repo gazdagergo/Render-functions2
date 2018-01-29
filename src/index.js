@@ -6,8 +6,12 @@ class ConfirmDeleteComponent extends React.Component {
 
   setConfirm = () => this.setState({ confirm: true });
 
-  click = () => {
-    this.state.confirm ? this.props.onClick() : this.setConfirm();
+  handleConfirm = () => {
+    this.props.onClick()
+  }
+
+  cancelAction = () => {
+    this.setState({ confirm: false })
   }
 
   render() {
@@ -15,8 +19,9 @@ class ConfirmDeleteComponent extends React.Component {
     const { confirm } = this.state;
 
     return children({
-      onClick: this.click,
       setConfirm: this.setConfirm,
+      cancelAction: this.cancelAction,
+      handleConfirm: this.handleConfirm,
       confirm
     });
   }
@@ -28,13 +33,26 @@ class App extends React.Component {
     return(
       <div>
         <ConfirmDeleteComponent onClick={() => console.log("deleted")}>
-          {({confirm, onClick}) => (
-            <button
-              onClick={onClick}
-            >
-              {confirm ? 'Are you sure?' : 'Delete'}
-            </button>
-          )}
+          {({ confirm, setConfirm, cancelAction, handleConfirm }) => {
+            
+            if (confirm) {
+              return (
+                <div>
+                  <button>Delete</button>
+                  <button onClick={handleConfirm}>Yes</button>
+                  <button onClick={cancelAction}>No</button>
+                </div>
+              )
+            }
+
+            return (
+              <div>
+                <button onClick={setConfirm}>
+                  Delete
+                </button>
+              </div>
+            )
+          }}
         </ConfirmDeleteComponent>
       </div>
     )
